@@ -20,7 +20,8 @@ public class Main {
         try {
             CSVReader empl = new CSVReader(new FileReader(fileName));
 
-            ColumnPositionMappingStrategy<Employee> clmn = new ColumnPositionMappingStrategy();
+            ColumnPositionMappingStrategy<Employee> clmn = new ColumnPositionMappingStrategy<Employee>();
+//            ColumnPositionMappingStrategy<Employee> clmn = new ColumnPositionMappingStrategy();
             clmn.setType(Employee.class);
             clmn.setColumnMapping(columnMapping);
 
@@ -37,7 +38,7 @@ public class Main {
     }
 
     private static <T> String listToJson(List<Employee> list) {
-        Type listType = new TypeToken<List<T>>(){}.getType();
+        Type listType = new TypeToken<List<T>>() {}.getType();
 
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
@@ -58,7 +59,13 @@ public class Main {
         }
 
     }
-    public static void main(String[] args) {
+
+
+    public static void main(String[] args)   {
+
+
+        //*******
+        //1ое задание   CSV в JSON
 
         String[] columnMapping = {"id", "firstName", "lastName", "country", "age"};
         String fileName = "data.csv";
@@ -66,9 +73,24 @@ public class Main {
         List<Employee> list = parseCSV(columnMapping, fileName);
 //       System.out.println(list.get(0).firstName);
 
+        //для наглядности...
+        for (Employee empl : list) {
+            empl.firstName = empl.firstName.replaceAll("CSV", "JSON");
+        }
+
         String json = listToJson(list);   // типо туСтринга в строку для созадния CSV
 //       System.out.println(json);
 
         writeString(json);
+
+
+
     }
+
+
+
+
+
+
+
 }
